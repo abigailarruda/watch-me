@@ -1,10 +1,18 @@
+import { memo } from "react";
+
 import { Button } from "../components/Button";
 
 import "../styles/sidebar.scss";
 
 interface Genre {
   id: number;
-  name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
+  name:
+    | "action"
+    | "comedy"
+    | "documentary"
+    | "drama"
+    | "horror"
+    | "family";
   title: string;
 }
 
@@ -14,11 +22,11 @@ interface SideBarProps {
   handleClickButton(id: number): void;
 }
 
-export function SideBar({
+const SideBarComponent = ({
   genres,
   selectedGenreId,
   handleClickButton,
-}: SideBarProps) {
+}: SideBarProps) => {
   return (
     <nav className="sidebar">
       <span>
@@ -38,4 +46,11 @@ export function SideBar({
       </div>
     </nav>
   );
-}
+};
+
+export const SideBar = memo(
+  SideBarComponent,
+  (prevProps, nextProps) => {
+    return Object.is(prevProps.genres, nextProps.genres);
+  }
+);
